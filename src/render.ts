@@ -61,13 +61,16 @@ export function renderAnnotation(svg: SVGSVGElement, rect: Rect, config: RoughAn
   const padding = parsePadding(config);
   const animate = (config.animate === undefined) ? true : (!!config.animate);
   const iterations = config.iterations || 2;
+  const jitter = config.jitter || 2;
+  const offsetTop = config.offsetTop || 0;
   const rtl = config.rtl ? 1 : 0;
   const o = getOptions('single', seed);
 
   switch (config.type) {
     case 'underline': {
-      const y = rect.y + rect.h + padding[2];
+      let y = 0;
       for (let i = rtl; i < iterations + rtl; i++) {
+        y = rect.y + rect.h + padding[2] + (Math.random() - 1) * jitter + offsetTop;
         if (i % 2) {
           opList.push(line(rect.x + rect.w, y, rect.x, y, o));
         } else {
@@ -77,8 +80,9 @@ export function renderAnnotation(svg: SVGSVGElement, rect: Rect, config: RoughAn
       break;
     }
     case 'strike-through': {
-      const y = rect.y + (rect.h / 2);
+      let y = 0;
       for (let i = rtl; i < iterations + rtl; i++) {
+        y = rect.y + (rect.h / 2)  + (Math.random() - 1) * jitter + offsetTop;
         if (i % 2) {
           opList.push(line(rect.x + rect.w, y, rect.x, y, o));
         } else {
@@ -87,9 +91,31 @@ export function renderAnnotation(svg: SVGSVGElement, rect: Rect, config: RoughAn
       }
       break;
     }
+    case 'multi-strike-through': {
+      const x = rect.x;
+      const y = rect.y + (rect.h / 2);
+      let previousX = x;
+      let previousY = y;
+      let nextX = 0;
+      let nextY = 0;
+
+      for (let i = rtl; i < iterations + rtl; i++) {
+        if (i % 2) {
+          nextX = rect.x + (Math.random() - 1) * jitter + offsetTop;
+        } else {
+          nextX = rect.x + rect.w + (Math.random() - 1) * jitter + offsetTop;
+        }
+
+        nextY = y + (Math.random() - 1) * jitter + offsetTop;
+        opList.push(line(previousX, previousY, nextX, nextY, o));
+        previousX = nextX;
+        previousY = nextY;
+      }
+      break;
+    }
     case 'box': {
-      const x = rect.x - padding[3];
-      const y = rect.y - padding[0];
+      const x = rect.x - padding[3] + (Math.random() - 1) * jitter + offsetTop;
+      const y = rect.y - padding[0] + (Math.random() - 1) * jitter + offsetTop;
       const width = rect.w + (padding[1] + padding[3]);
       const height = rect.h + (padding[0] + padding[2]);
       for (let i = 0; i < iterations; i++) {

@@ -6,7 +6,7 @@
   "module": "lib/rough-notation.esm.js",
   "types": "lib/rough-notation.d.ts",
   "scripts": {
-    "build": "rm -rf lib && tsc && rollup -c",
+    "build": "npx rimraf lib && tsc && rollup -c",
     "lint": "tslint -p tsconfig.json",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -26,6 +26,7 @@
   },
   "homepage": "https://github.com/pshihn/rough-notation#readme",
   "devDependencies": {
+    "rimraf": "^5.0.1",
     "rollup": "^2.32.1",
     "rollup-plugin-node-resolve": "^5.2.0",
     "rollup-plugin-terser": "^6.1.0",
