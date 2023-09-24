@@ -28,8 +28,8 @@ export interface RoughAnnotationConfigBase {
   padding?: RoughPadding; // defaults to 5px
   iterations?: number; // defaults to 2
   brackets?: BracketType | BracketType[]; // defaults to 'right'
-  jitter?: number;
-  offsetTop?: number;
+  jitter?: number; // defaults to 2
+  offsetTop?: number; // defaults to 2
 }
 
 export interface RoughAnnotation extends RoughAnnotationConfigBase {

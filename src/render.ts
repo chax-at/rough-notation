@@ -170,11 +170,15 @@ export function renderAnnotation(svg: SVGSVGElement, rect: Rect, config: RoughAn
       break;
     }
     case 'crossed-off': {
-      const x = rect.x;
-      const y = rect.y;
-      const x2 = x + rect.w;
-      const y2 = y + rect.h;
+      const _x = rect.x - padding[3] * 2;
+      const _y = rect.y - padding[0] * 2;
+      const _x2 = rect.x + rect.w + padding[1] * 2;
+      const _y2 = rect.y + rect.h + padding[2] * 2;
       for (let i = rtl; i < iterations + rtl; i++) {
+        const x = _x + (Math.random() - 1) * jitter;
+        const y = _y + (Math.random() - 1) * jitter + offsetTop;
+        const x2 = _x2 + (Math.random() - 1) * jitter;
+        const y2 = _y2 + (Math.random() - 1) * jitter + offsetTop;
         if (i % 2) {
           opList.push(line(x2, y2, x, y, o));
         } else {
@@ -182,6 +186,10 @@ export function renderAnnotation(svg: SVGSVGElement, rect: Rect, config: RoughAn
         }
       }
       for (let i = rtl; i < iterations + rtl; i++) {
+        const x = _x + (Math.random() - 1) * jitter;
+        const y = _y + (Math.random() - 1) * jitter + offsetTop;
+        const x2 = _x2 + (Math.random() - 1) * jitter;
+        const y2 = _y2 + (Math.random() - 1) * jitter + offsetTop;
         if (i % 2) {
           opList.push(line(x, y2, x2, y, o));
         } else {
@@ -207,14 +215,17 @@ export function renderAnnotation(svg: SVGSVGElement, rect: Rect, config: RoughAn
       break;
     }
     case 'highlight': {
+      const lx = rect.x - padding[3] * 2;
+      const rx = rect.x + rect.w + padding[1] * 2;
+
       const o = getOptions('highlight', seed);
       strokeWidth = rect.h * 0.95;
-      const y = rect.y + (rect.h / 2);
+      const y = rect.y + ((rect.h - padding[0] - padding[2]) / 2);
       for (let i = rtl; i < iterations + rtl; i++) {
         if (i % 2) {
-          opList.push(line(rect.x + rect.w, y, rect.x, y, o));
+          opList.push(line(rx, y, lx, y, o));
         } else {
-          opList.push(line(rect.x, y, rect.x + rect.w, y, o));
+          opList.push(line(lx, y, rx, y, o));
         }
       }
       break;
