@@ -79,9 +79,8 @@ export function renderAnnotation(svg: SVGSVGElement, rect: Rect, config: RoughAn
       break;
     }
     case 'strike-through': {
-      let y = 0;
       for (let i = rtl; i < iterations + rtl; i++) {
-        y = rect.y + (rect.h / 2)  + (Math.random() - 1) * jitter + offsetTop;
+        const y = rect.y + (rect.h / 2)  + (Math.random() - 1) * jitter + offsetTop;
         if (i % 2) {
           opList.push(line(rect.x + rect.w, y, rect.x, y, o));
         } else {
