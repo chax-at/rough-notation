@@ -9,7 +9,7 @@ export interface Rect {
   h: number;
 }
 
-export type RoughAnnotationType = 'underline' | 'box' | 'circle' | 'highlight' | 'strike-through' | 'crossed-off' | 'bracket';
+export type RoughAnnotationType = 'underline' | 'box' | 'circle' | 'highlight' | 'strike-through' | 'multi-strike-through' | 'crossed-off' | 'bracket';
 export type FullPadding = [number, number, number, number];
 export type RoughPadding = number | [number, number] | FullPadding;
 export type BracketType = 'left' | 'right' | 'top' | 'bottom';
@@ -22,12 +22,14 @@ export interface RoughAnnotationConfig extends RoughAnnotationConfigBase {
 
 export interface RoughAnnotationConfigBase {
   animate?: boolean; // defaults to true
-  animationDuration?: number; // defaulst to 1000ms
+  animationDuration?: number; // defaults to 1000ms
   color?: string; // defaults to currentColor
   strokeWidth?: number; // default based on type
   padding?: RoughPadding; // defaults to 5px
   iterations?: number; // defaults to 2
   brackets?: BracketType | BracketType[]; // defaults to 'right'
+  jitter?: number; // defaults to 2
+  offsetTop?: number; // defaults to 2
 }
 
 export interface RoughAnnotation extends RoughAnnotationConfigBase {
