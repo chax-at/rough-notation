@@ -69,7 +69,7 @@ export function renderAnnotation(svg: SVGSVGElement, rect: Rect, config: RoughAn
   switch (config.type) {
     case 'underline': {
       for (let i = rtl; i < iterations + rtl; i++) {
-        const y = rect.y + rect.h + padding[2] + (Math.random() - 1) * jitter + offsetTop;
+        const y = rect.y + rect.h + padding[2] + (Math.random() - 0.5) * jitter + offsetTop;
         if (i % 2) {
           opList.push(line(rect.x + rect.w, y, rect.x, y, o));
         } else {
@@ -80,7 +80,7 @@ export function renderAnnotation(svg: SVGSVGElement, rect: Rect, config: RoughAn
     }
     case 'strike-through': {
       for (let i = rtl; i < iterations + rtl; i++) {
-        const y = rect.y + (rect.h / 2)  + (Math.random() - 1) * jitter + offsetTop;
+        const y = rect.y + (rect.h / 2)  + (Math.random() - 0.5) * jitter + offsetTop;
         if (i % 2) {
           opList.push(line(rect.x + rect.w, y, rect.x, y, o));
         } else {
@@ -99,12 +99,12 @@ export function renderAnnotation(svg: SVGSVGElement, rect: Rect, config: RoughAn
 
       for (let i = rtl; i < iterations + rtl; i++) {
         if (i % 2) {
-          nextX = rect.x + (Math.random() - 1) * jitter + offsetTop;
+          nextX = rect.x + (Math.random() - 0.5) * jitter + offsetTop;
         } else {
-          nextX = rect.x + rect.w + (Math.random() - 1) * jitter + offsetTop;
+          nextX = rect.x + rect.w + (Math.random() - 0.5) * jitter + offsetTop;
         }
 
-        nextY = y + (Math.random() - 1) * jitter + offsetTop;
+        nextY = y + (Math.random() - 0.5) * jitter + offsetTop;
         opList.push(line(previousX, previousY, nextX, nextY, o));
         previousX = nextX;
         previousY = nextY;
@@ -112,8 +112,8 @@ export function renderAnnotation(svg: SVGSVGElement, rect: Rect, config: RoughAn
       break;
     }
     case 'box': {
-      const x = rect.x - padding[3] + (Math.random() - 1) * jitter + offsetTop;
-      const y = rect.y - padding[0] + (Math.random() - 1) * jitter + offsetTop;
+      const x = rect.x - padding[3] + (Math.random() - 0.5) * jitter + offsetTop;
+      const y = rect.y - padding[0] + (Math.random() - 0.5) * jitter + offsetTop;
       const width = rect.w + (padding[1] + padding[3]);
       const height = rect.h + (padding[0] + padding[2]);
       for (let i = 0; i < iterations; i++) {
@@ -171,14 +171,14 @@ export function renderAnnotation(svg: SVGSVGElement, rect: Rect, config: RoughAn
     }
     case 'crossed-off': {
       const _x = rect.x - padding[3] * 2;
-      const _y = rect.y - padding[0] * 2;
+      const _y = rect.y - padding[0] * 2 + offsetTop;;
       const _x2 = rect.x + rect.w + padding[1] * 2;
-      const _y2 = rect.y + rect.h + padding[2] * 2;
+      const _y2 = rect.y + rect.h + padding[2] * 2 + offsetTop;;
       for (let i = rtl; i < iterations + rtl; i++) {
-        const x = _x + (Math.random() - 1) * jitter;
-        const y = _y + (Math.random() - 1) * jitter + offsetTop;
-        const x2 = _x2 + (Math.random() - 1) * jitter;
-        const y2 = _y2 + (Math.random() - 1) * jitter + offsetTop;
+        const x = _x + (Math.random() - 0.5) * jitter;
+        const y = _y + (Math.random() - 0.5) * jitter;
+        const x2 = _x2 + (Math.random() - 0.5) * jitter;
+        const y2 = _y2 + (Math.random() - 0.5) * jitter;
         if (i % 2) {
           opList.push(line(x2, y2, x, y, o));
         } else {
@@ -186,10 +186,10 @@ export function renderAnnotation(svg: SVGSVGElement, rect: Rect, config: RoughAn
         }
       }
       for (let i = rtl; i < iterations + rtl; i++) {
-        const x = _x + (Math.random() - 1) * jitter;
-        const y = _y + (Math.random() - 1) * jitter + offsetTop;
-        const x2 = _x2 + (Math.random() - 1) * jitter;
-        const y2 = _y2 + (Math.random() - 1) * jitter + offsetTop;
+        const x = _x + (Math.random() - 0.5) * jitter;
+        const y = _y + (Math.random() - 0.5) * jitter + offsetTop;
+        const x2 = _x2 + (Math.random() - 0.5) * jitter;
+        const y2 = _y2 + (Math.random() - 0.5) * jitter + offsetTop;
         if (i % 2) {
           opList.push(line(x, y2, x2, y, o));
         } else {
